@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>日常家居及社區活動能力評估</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --primary-light: #3b5068;
+      --secondary: #27ae60;
+      --secondary-dark: #1e8449;
+      --accent: #e67e22;
+      --danger: #c0392b;
+      --danger-dark: #a93226;
+      --light: #f8f9fa;
+      --dark: #2c3e50;
+      --gray: #6c757d;
+      --border: #dee2e6;
+      --bg-page: #f0f2f5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Microsoft JhengHei', 'Noto Sans TC', system-ui, sans-serif;
+      background: var(--bg-page);
+      color: var(--dark);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 12px;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #2c3e50 0%, #1a2634 100%);
+      color: white;
+      padding: 24px 20px;
+      text-align: center;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    .header h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .progress-container {
+      background: white;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      border: 1px solid #eef1f5;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #e9ecef;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #27ae60, #2ecc71);
+      border-radius: 20px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .question-block {
+      background: white;
+      border-radius: 16px;
+      padding: 20px 18px;
+      margin-bottom: 18px;
+      border: 1px solid #eef1f5;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+      transition: box-shadow 0.2s;
+      border-left: 6px solid var(--primary);
+    }
+
+    .question-block:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    .question-label {
+      display: flex;
+      align-items: baseline;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+      color: #1e2b3a;
+      gap: 8px;
+    }
+
+    .question-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: white;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      background: #fafbfc;
+      border: 1px solid #e1e5eb;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .choice:hover, .choice:active {
+      background: #eef4ff;
+      border-color: var(--primary-light);
+    }
+
+    .choice input {
+      margin-right: 14px;
+      transform: scale(1.25);
+      accent-color: var(--primary);
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      border: 1px solid transparent;
+      flex: 1 1 auto;
+      min-width: 120px;
+    }
+
+    .btn-primary {
+      background: #2c3e50;
+      color: white;
+      border-color: #2c3e50;
+    }
+
+    .btn-tertiary {
+      background: #f1f4f8;
+      color: #2c3e50;
+    }
+
+    .btn-danger {
+      background: white;
+      color: #c0392b;
+      border-color: #c0392b;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .result-container {
+      background: #f9fbfd;
+      border-radius: 18px;
+      padding: 22px;
+      margin-top: 24px;
+      border: 1px solid #dce3eb;
+    }
+
+    .score-display {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      color: #2c3e50;
+      margin: 10px 0;
+    }
+
+    .message {
+      padding: 14px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-weight: 500;
+    }
+
+    .error {
+      background: #ffebee;
+      color: #b71c1c;
+      border-left: 5px solid #c62828;
+    }
+
+    .success {
+      background: #e8f5e9;
+      color: #1e5631;
+      border-left: 5px solid #2e7d32;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 18px;
+      color: #5d6d7e;
+      font-size: 0.85rem;
+      border-top: 1px solid #e1e8f0;
+    }
+
+    .save-status {
+      font-size: 0.8rem;
+      color: #2c3e50;
+      text-align: right;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1><i class="fas fa-home-user"></i> 日常家居及社區活動能力評估</h1>
+  </div>
+
+  <div class="content">
+    <!-- 進度條 -->
+    <div class="progress-container">
+      <div class="progress-info"><span>完成進度</span><span id="progress-text">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-bar"></div></div>
+    </div>
+
+    <form id="lawton-form">
+      <div id="questions-container"></div>
+
+      <div class="buttons">
+        <button type="button" id="save-btn" class="btn btn-tertiary"><i class="fas fa-save"></i> 暫存</button>
+        <button type="button" id="clear-btn" class="btn btn-danger"><i class="fas fa-undo-alt"></i> 清除</button>
+        <button type="button" id="calculate-btn" class="btn btn-primary"><i class="fas fa-calculator"></i> 計算分數</button>
+      </div>
+      <div class="save-status" id="save-status"></div>
+      <div id="message" class="message" style="display: none;"></div>
+    </form>
+
+    <div id="result-container" class="result-container" style="display: none;">
+      <h2 style="display: flex; align-items:center; gap:8px;"><i class="fas fa-clipboard-check"></i> 評估結果</h2>
+      <div class="score-display"><span id="score-display">0</span> / 27</div>
+      <p style="text-align:center; color:#4a5568;">分數越高表示獨立能力越好 (滿分27分)</p>
+    </div>
+  </div>
+  <div class="footer">© 日常家居及社區活動能力評估 · 臨床參考</div>
+</div>
+
+<script>
+  (function() {
+    // ---------- 依據 Lawton IADL 定義題目 (4點量表: 3=獨立, 2=有些困難, 1=需幫忙, 0=完全不能) ----------
+    const questions = [
+      { id: 'Q1', text: '「你能唔能夠自己用電話呢?」包括找電話號碼、打及接聽電話' },
+      { id: 'Q2', text: '「你能唔能夠自己搭車呢?」包括自己上到正確的車，俾車錢/買車票，上/落車（假設你必須要搭交通工具去一個遠的地方，例如探朋友/睇醫生）' },
+      { id: 'Q3', text: '「你能唔能夠自己買野呢?」包括自己揀貨品、俾錢及攞番屋企（假設你必須要到附近商店買食物或日用品）' },
+      { id: 'Q4', text: '「你能唔能夠自己煮食呢?」包括自己諗食乜、準備材料、煮熟食物及放入碗碟（假設你必須要自己準備兩餐）' },
+      { id: 'Q5', text: '「你能唔能夠自己做家務呢?」包括簡單家務（如抺檯、執床、洗碗）及較重的家務（如抺地/窗）（假設你必須要自己做家務）' },
+      { id: 'Q6', text: '「你能唔能夠應付簡單的家居維修呢?」例如換燈泡、維修檯及上緊螺絲等 (假設你必須自己做)' },
+      { id: 'Q7', text: '「你能唔能夠自己洗衫呢?」包括淸洗及曬自己的衫、被、床單等（假設你必須要洗自己的衫、被、床單等）' },
+      { id: 'Q8', text: '「你能唔能夠自己服用藥物呢?」包括能依照指示在正確的時間內服用正確的份量（假設你必須要自己查藥油或食藥等）' },
+      { id: 'Q9', text: '「你能唔能夠處理自己的財務呢?」包括日常錢銀的找續、交租/水電費及到銀行提款（假設你必須要買嘢、自己交租/水電費及將錢放在銀行）' }
+    ];
+
+    const totalQuestions = questions.length;
+    const maxPossibleScore = totalQuestions * 3; // 27
+
+    // 選項文字對照 (第一個選項為「不需要任何幫助」)
+    const choiceLabels = [
+      { value: 3, text: '不需要任何幫助' },
+      { value: 2, text: '可以自己做，但做的時候有困難' },
+      { value: 1, text: '需要一些幫忙' },
+      { value: 0, text: '完全不能自己做' }
+    ];
+
+    const form = document.getElementById('lawton-form');
+    const questionsContainer = document.getElementById('questions-container');
+    const calculateBtn = document.getElementById('calculate-btn');
+    const saveBtn = document.getElementById('save-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const messageEl = document.getElementById('message');
+    const resultContainer = document.getElementById('result-container');
+    const scoreDisplay = document.getElementById('score-display');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const saveStatusEl = document.getElementById('save-status');
+
+    // 生成題目HTML
+    function renderQuestions() {
+      let html = '';
+      questions.forEach((q, idx) => {
+        html += `
+          <div class="question-block" data-question="${q.id}">
+            <div class="question-label">
+              <span class="question-number">${idx+1}</span>
+              <span>${q.text}</span>
+            </div>
+            <div class="choices">
+              ${choiceLabels.map(opt => `
+                <label class="choice">
+                  <input type="radio" name="${q.id}" value="${opt.value}">
+                  ${opt.text}
+                </label>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+      questionsContainer.innerHTML = html;
+    }
+    renderQuestions();
+
+    // 事件監聽：所有radio change
+    questionsContainer.addEventListener('change', function(e) {
+      if (e.target && e.target.type === 'radio') {
+        updateProgress();
+        autoSave();
+      }
+    });
+
+    // 更新進度條
+    function updateProgress() {
+      let answered = 0;
+      questions.forEach(q => {
+        if (document.querySelector(`input[name="${q.id}"]:checked`)) answered++;
+      });
+      const percent = (answered / totalQuestions) * 100;
+      progressBar.style.width = `${percent}%`;
+      progressText.textContent = `${Math.round(percent)}%`;
+    }
+
+    // 取得目前所有答案 (物件)
+    function getCurrentAnswers() {
+      const answers = {};
+      questions.forEach(q => {
+        const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+        if (selected) answers[q.id] = parseInt(selected.value);
+      });
+      return answers;
+    }
+
+    // 計算總分
+    function calculateTotal() {
+      const answers = getCurrentAnswers();
+      return Object.values(answers).reduce((sum, val) => sum + val, 0);
+    }
+
+    // 檢查是否全部回答
+    function isAllAnswered() {
+      return questions.every(q => document.querySelector(`input[name="${q.id}"]:checked`));
+    }
+
+    // 顯示訊息
+    function showMessage(text, type) {
+      messageEl.textContent = text;
+      messageEl.className = `message ${type}`;
+      messageEl.style.display = 'block';
+      clearTimeout(window.msgTimeout);
+      window.msgTimeout = setTimeout(() => { messageEl.style.display = 'none'; }, 4000);
+    }
+
+    // 計算分數並顯示
+    function calculateAndDisplay() {
+      if (!isAllAnswered()) {
+        showMessage('請完成所有9項題目後再計算分數。', 'error');
+        return;
+      }
+      const total = calculateTotal();
+      scoreDisplay.textContent = total;
+      resultContainer.style.display = 'block';
+      resultContainer.scrollIntoView({ behavior: 'smooth' });
+      showMessage(`評估完成，總分：${total} / ${maxPossibleScore}`, 'success');
+    }
+
+    // 自動暫存至 localStorage
+    function autoSave() {
+      const data = {
+        answers: getCurrentAnswers()
+      };
+      localStorage.setItem('lawtonIADLData', JSON.stringify(data));
+    }
+
+    // 手動暫存 (顯示提示)
+    function manualSave() {
+      autoSave();
+      saveStatusEl.textContent = '✓ 已暫存 ' + new Date().toLocaleTimeString();
+      setTimeout(() => { saveStatusEl.textContent = ''; }, 2500);
+    }
+
+    // 載入暫存資料
+    function loadSavedData() {
+      const saved = localStorage.getItem('lawtonIADLData');
+      if (!saved) return;
+      try {
+        const data = JSON.parse(saved);
+        // 填寫答案
+        if (data.answers) {
+          Object.entries(data.answers).forEach(([name, value]) => {
+            const radio = document.querySelector(`input[name="${name}"][value="${value}"]`);
+            if (radio) radio.checked = true;
+          });
+        }
+        updateProgress();
+        saveStatusEl.textContent = '已載入暫存資料';
+        setTimeout(() => { saveStatusEl.textContent = ''; }, 2000);
+      } catch (e) {}
+    }
+
+    // 清除全部
+    function clearAll() {
+      if (!confirm('確定清除所有已填寫的資料嗎？')) return;
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      resultContainer.style.display = 'none';
+      updateProgress();
+      localStorage.removeItem('lawtonIADLData');
+      showMessage('資料已清除', 'success');
+    }
+
+    // 綁定按鈕事件
+    calculateBtn.addEventListener('click', calculateAndDisplay);
+    saveBtn.addEventListener('click', manualSave);
+    clearBtn.addEventListener('click', clearAll);
+
+    // 初始化
+    loadSavedData();
+    updateProgress();
+  })();
+</script>
+</body>
+</html>
